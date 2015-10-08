@@ -1,0 +1,29 @@
+---
+# This playbook installs python virtualenv. This allows creating virtual
+# environments on the machine.
+
+# We install virtualenv from the source tarball as the official ubuntu
+# provided packages are too old. This approach is also
+# distro-agnostic, which is a plus.
+- name: Ensure virtualenv directory is present
+  file:
+    path: "{{ virtualenv_script_container }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "755"
+
+- name: Ensure virtualenv files are present
+  unarchive:
+    src: virtualenv-{{ virtualenv_script_version }}.tar.gz
+    dest: "{{ virtualenv_script_container }}"
+
+# Virtualenv binary must be present on the system in order for the pip
+# ansible module to function
+- name: Ensure virtualenv binary is present
+  template:
+    src: virtualenv.j2
+    dest: /usr/local/bin/virtualenv
+    owner: root
+    group: root
+    mode: "755"

@@ -1,0 +1,7 @@
+---
+
+- name: Set up build servers
+  sudo: yes
+  hosts: buildservers
+  roles:
+    - virtualenv

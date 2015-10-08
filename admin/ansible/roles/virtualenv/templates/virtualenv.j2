@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/bin/env python {{ virtualenv_script_container }}/current/virtualenv.py $@
+"$@"/bin/pip install pip --upgrade
