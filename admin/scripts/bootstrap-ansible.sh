@@ -29,17 +29,12 @@ else
   sudo sh -c "curl -s https://pypi.python.org/packages/source/v/virtualenv/virtualenv-$VIRTUALENV_SCRIPT_VERSION.tar.gz | tar -C $VIRTUALENV_SCRIPT_CONTAINER -xzv"
 fi
 
-# Ensure virtualenv script has correct permissions
-# sudo chown -R root:root $VIRTUALENV_SCRIPT_CONTAINER/virtualenv-$VIRTUALENV_SCRIPT_VERSION
-# sudo chmod -R 755 $VIRTUALENV_SCRIPT_CONTAINER/virtualenv-$VIRTUALENV_SCRIPT_VERSION
-
 # Ensure symlinks exists and is pointing to our virtualenv
 if [[ -e $VIRTUALENV_SCRIPT_CONTAINER/current || -h $VIRTUALENV_SCRIPT_CONTAINER/current ]]; then
   sudo rm -rf $VIRTUALENV_SCRIPT_CONTAINER/current
 fi
 sudo ln -s $VIRTUALENV_SCRIPT_CONTAINER/virtualenv-$VIRTUALENV_SCRIPT_VERSION $VIRTUALENV_SCRIPT_CONTAINER/current
 sudo chown root:root $VIRTUALENV_SCRIPT_CONTAINER/current
-#sudo chmod 644 $VIRTUALENV_SCRIPT_CONTAINER/current
 
 # Ensure virtualenv wrapper script is present
 cat <<EOF | sudo tee /usr/local/bin/virtualenv >> /dev/null
